@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Harvest Cafe</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e8;
+      --brown: #3b2a1a;
+      --tan:   #c4a882;
+      --green: #4a5c45;
+      --light: #faf7f2;
+    }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      background: var(--cream);
+      color: var(--brown);
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.4rem 4rem;
+      background: var(--light);
+      border-bottom: 1px solid #e0d8cc;
+      position: sticky; top: 0; z-index: 10;
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.02em;
+    }
+    .logo span { color: var(--green); font-style: italic; }
+    nav ul { list-style: none; display: flex; gap: 2.2rem; }
+    nav ul a {
+      text-decoration: none;
+      color: var(--brown);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    nav ul a:hover { color: var(--green); }
+
+    /* HERO */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 88vh;
+    }
+    .hero-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 5rem 4rem 5rem 4rem;
+    }
+    .hero-text .eyebrow {
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 1.2rem;
+      font-weight: 500;
+    }
+    .hero-text h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 4vw, 4.2rem);
+      line-height: 1.15;
+      margin-bottom: 1.6rem;
+    }
+    .hero-text h1 em { font-style: italic; color: var(--green); }
+    .hero-text p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #6b5a4a;
+      max-width: 380px;
+      margin-bottom: 2.4rem;
+      font-weight: 300;
+    }
+    .btn {
+      display: inline-block;
+      background: var(--brown);
+      color: var(--cream);
+      padding: 0.9rem 2.2rem;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+      align-self: flex-start;
+    }
+    .btn:hover { background: var(--green); }
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid var(--brown);
+      color: var(--brown);
+      margin-left: 1rem;
+    }
+    .btn-outline:hover { background: var(--brown); color: var(--cream); }
+
+    .hero-image {
+      background: var(--tan);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-image img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.92;
+    }
+    /* fallback if no image — decorative placeholder */
+    .hero-image .placeholder {
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #c4a882 0%, #8a6a4a 50%, #4a5c45 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .placeholder-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 8rem;
+      color: rgba(255,255,255,0.18);
+      font-style: italic;
+      user-select: none;
+    }
+
+    /* STRIP */
+    .strip {
+      background: var(--green);
+      color: var(--cream);
+      display: flex;
+      justify-content: center;
+      gap: 5rem;
+      padding: 1.6rem 4rem;
+    }
+    .strip-item {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .strip-item .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--tan); }
+
+    /* MENU SECTION */
+    .section { padding: 6rem 4rem; }
+    .section-header { text-align: center; margin-bottom: 3.5rem; }
+    .section-header .eyebrow {
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--green);
+      font-weight: 500;
+      margin-bottom: 0.8rem;
+    }
+    .section-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .menu-card {
+      background: var(--light);
+      padding: 2.4rem 2rem;
+      border: 1px solid #e0d8cc;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .menu-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(59,42,26,0.1);
+    }
+    .menu-card .category {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--tan);
+      margin-bottom: 0.6rem;
+    }
+    .menu-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      margin-bottom: 0.6rem;
+    }
+    .menu-card p {
+      font-size: 0.88rem;
+      color: #6b5a4a;
+      line-height: 1.7;
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
+    .menu-card .price {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--green);
+    }
+
+    /* ABOUT */
+    .about {
+      background: var(--brown);
+      color: var(--cream);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+    }
+    .about-text { padding: 6rem 4rem; }
+    .about-text .eyebrow {
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--tan);
+      margin-bottom: 1.2rem;
+      font-weight: 500;
+    }
+    .about-text h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      line-height: 1.2;
+      margin-bottom: 1.4rem;
+    }
+    .about-text h2 em { font-style: italic; color: var(--tan); }
+    .about-text p {
+      font-size: 1rem;
+      line-height: 1.85;
+      color: #c9bba8;
+      font-weight: 300;
+      max-width: 400px;
+    }
+    .about-image {
+      height: 100%;
+      min-height: 480px;
+    }
+    .about-image .placeholder {
+      width: 100%; height: 100%;
+      background: linear-gradient(160deg, #4a5c45 0%, #2a3a25 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* HOURS */
+    .hours-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .hours-row {
+      background: var(--light);
+      border: 1px solid #e0d8cc;
+      padding: 1.4rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .hours-row .day { font-weight: 500; font-size: 0.9rem; }
+    .hours-row .time { font-size: 0.88rem; color: var(--green); font-weight: 300; }
+
+    /* FOOTER */
+    footer {
+      background: var(--brown);
+      color: #c9bba8;
+      text-align: center;
+      padding: 2.5rem 4rem;
+      font-size: 0.82rem;
+      letter-spacing: 0.05em;
+    }
+    footer strong { color: var(--cream); }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      nav ul { gap: 1.2rem; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-image { min-height: 320px; }
+      .hero-text { padding: 3rem 1.5rem; }
+      .strip { flex-direction: column; gap: 1rem; padding: 1.4rem 1.5rem; }
+      .section { padding: 4rem 1.5rem; }
+      .menu-grid { grid-template-columns: 1fr; }
+      .about { grid-template-columns: 1fr; }
+      .about-text { padding: 3rem 1.5rem; }
+      .about-image { min-height: 280px; }
+      .hours-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">Harvest <span>Cafe</span></div>
+    <ul>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#hours">Hours</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-text">
+      <p class="eyebrow">Specialty Coffee &amp; Kitchen</p>
+      <h1>Where every cup tells a <em>story</em></h1>
+      <p>Locally roasted beans, seasonal menus, and a warm corner of the city that feels like home. Open every morning, rain or shine.</p>
+      <div>
+        <a href="#menu" class="btn">View Menu</a>
+        <a href="#hours" class="btn btn-outline">Our Hours</a>
+      </div>
+    </div>
+    <div class="hero-image">
+      <div class="placeholder">
+        <span class="placeholder-text">☕</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip">
+    <div class="strip-item"><span class="dot"></span> Specialty Coffee</div>
+    <div class="strip-item"><span class="dot"></span> Seasonal Kitchen</div>
+    <div class="strip-item"><span class="dot"></span> Local Roasters</div>
+    <div class="strip-item"><span class="dot"></span> Dine in &amp; Takeaway</div>
+  </div>
+
+  <section class="section" id="menu">
+    <div class="section-header">
+      <p class="eyebrow">What We Serve</p>
+      <h2>Our Menu</h2>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-card">
+        <p class="category">Coffee</p>
+        <h3>Flat White</h3>
+        <p>Double ristretto, steamed whole milk, silky microfoam. The classic done right.</p>
+        <span class="price">$5.50</span>
+      </div>
+      <div class="menu-card">
+        <p class="category">Coffee</p>
+        <h3>Filter of the Day</h3>
+        <p>Single origin, brewed fresh every hour. Ask your barista what's on today.</p>
+        <span class="price">$4.50</span>
+      </div>
+      <div class="menu-card">
+        <p class="category">All Day Breakfast</p>
+        <h3>Smashed Avo Toast</h3>
+        <p>Sourdough, smashed avocado, poached eggs, dukkah, chilli flakes.</p>
+        <span class="price">$18.00</span>
+      </div>
+      <div class="menu-card">
+        <p class="category">All Day Breakfast</p>
+        <h3>Ricotta Hotcakes</h3>
+        <p>Fluffy ricotta pancakes, fresh berries, honeycomb butter, maple syrup.</p>
+        <span class="price">$20.00</span>
+      </div>
+      <div class="menu-card">
+        <p class="category">Lunch</p>
+        <h3>Harvest Bowl</h3>
+        <p>Roasted seasonal vegetables, farro, tahini dressing, toasted seeds, fresh herbs.</p>
+        <span class="price">$22.00</span>
+      </div>
+      <div class="menu-card">
+        <p class="category">Pastry</p>
+        <h3>Croissant</h3>
+        <p>Butter croissant baked fresh each morning. Plain, almond, or ham &amp; cheese.</p>
+        <span class="price">$7.00</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="about-text">
+      <p class="eyebrow">Our Story</p>
+      <h2>Good food, good coffee, <em>good people</em></h2>
+      <p>Harvest Cafe started as a tiny corner spot with six tables and a dream of serving the neighbourhood something better than average. Today we're still that same corner spot — just with a few more tables and a whole lot more regulars.</p>
+    </div>
+    <div class="about-image">
+      <div class="placeholder">
+        <span class="placeholder-text" style="font-size:5rem; color:rgba(255,255,255,0.15);">🌿</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="hours">
+    <div class="section-header">
+      <p class="eyebrow">Find Us</p>
+      <h2>Hours &amp; Location</h2>
+    </div>
+    <div class="hours-grid">
+      <div class="hours-row"><span class="day">Monday – Friday</span><span class="time">7:00am – 4:00pm</span></div>
+      <div class="hours-row"><span class="day">Saturday</span><span class="time">8:00am – 3:00pm</span></div>
+      <div class="hours-row"><span class="day">Sunday</span><span class="time">8:30am – 2:00pm</span></div>
+      <div class="hours-row"><span class="day">Public Holidays</span><span class="time">9:00am – 1:00pm</span></div>
+    </div>
+    <p style="text-align:center; margin-top:2rem; color:#6b5a4a; font-size:0.92rem;" id="contact">
+      📍 42 Harvest Lane, Surry Hills NSW 2010 &nbsp;·&nbsp; 📞 (02) 9123 4567
+    </p>
+  </section>
+
+  <footer>
+    <strong>Harvest Cafe</strong> &nbsp;·&nbsp; 42 Harvest Lane, Surry Hills &nbsp;·&nbsp; © 2026 All rights reserved
+  </footer>
+
+</body>
+</html>
